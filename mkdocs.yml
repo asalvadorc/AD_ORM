@@ -1,0 +1,28 @@
+site_url : https://asalvadorc.github.io/AD_ORM
+
+site_name: AD - Accés a Dades
+
+extra_css:
+  - css/extra.css
+
+theme: 
+  name: readthedocs
+  highlightjs: true
+  logo: assets/logocaminas.png
+
+nav:
+
+- UD 3. Mapatge Objecte-Relacional(ORM):
+  - 1 - Introducció: 1__introducci.md
+  - 2 - Concepte de mapatge objecte-relacional: 2__concepte_de_mapatge_objecterelacional.md
+  - 3 - Eines de mapatge: 3__eines_de_mapatge.md
+  - 4 - Arquitectura Hibernate: 4__arquitectura_hibernate.md
+  - 5 - Connexió a Hibernate: 5__connexi_a_hibernate.md
+  - 6 - Classes generades: 6__classes_generades.md
+  - 7 - Estructura dels fitxers de mapatge: 7__estructura_dels_fitxers_de_mapatge.md
+  - 8 - Sessions i objectes hibernate: 8__sessions_i_objectes_hibernate.md
+  - 9 - Consultes: 9__consultes.md
+  - 10 - Consultes d'actualització: 10__consultes_dactualitzaci.md
+  - 11 - Resum del llenguatge HQL: 11__resum_del_llenguatge_hql.md
+  #- 12 - Generació de taules a partir de les classes (voluntari): 12_generaci_de_taules_a_partir_de_les_classes_voluntari.md
+  - Exercicis: exercicis.md
