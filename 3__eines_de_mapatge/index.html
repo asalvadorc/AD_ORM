@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://asalvadorc.github.io/AD_ORM/3__eines_de_mapatge/" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>3 - Eines de mapatge - AD - Accés a Dades</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../css/extra.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "3 - Eines de mapatge";
+        var mkdocs_page_input_path = "3__eines_de_mapatge.md";
+        var mkdocs_page_url = "/AD_ORM/3__eines_de_mapatge/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="..">
+          <img src="../assets/logocaminas.png" class="logo" alt="Logo"/>
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">UD 3. Mapatge Objecte-Relacional</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../1__introducci/">1 - Introducció</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../2__concepte_de_mapatge_objecterelacional/">2 - Concepte de mapatge objecte-relacional</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">3 - Eines de mapatge</a>
+    <ul class="current">
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../4__arquitectura_hibernate/">4 - Arquitectura Hibernate</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../5__connexi_a_hibernate/">5 - Connexió a Hibernate</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../6__classes_generades/">6 - Classes generades</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../7__estructura_dels_fitxers_de_mapatge/">7 - Estructura dels fitxers de mapatge</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../8__sessions_i_objectes_hibernate/">8 - Sessions i objectes hibernate</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../9__consultes/">9 - Consultes</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../10__consultes_dactualitzaci/">10 - Consultes d'actualització</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../11__resum_del_llenguatge_hql/">11 - Resum del llenguatge HQL</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../exercicis/">Exercicis</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">AD - Accés a Dades</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">UD 3. Mapatge Objecte-Relacional</li>
+      <li class="breadcrumb-item active">3 - Eines de mapatge</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="3-eines-de-mapatge">3 - Eines de mapatge</h1>
+<p>Actualment hi ha moltes eines de mapatge en el mercat. Existeixen eines de
+mapatge per a la major part de llenguatges orientats a objectes PHP,
+Objective-C, C++, SmallTalk i evidentment Java/Kotlin.</p>
+<p>Bàsicament són eines en les quals podem distingir tres aspectes conceptuals
+clarament diferenciats:</p>
+<ul>
+<li>Un sistema per expressar el mapatge entre les classes i l’esquema de la Base de Dades,</li>
+<li>Un llenguatge de consulta orientat a objectes (que en realitat accedirà a les taules) i per tant ens permetrà salvar el desfasament O-R</li>
+<li>Un nucli funcional que possibilita la sincronització dels objectes persistents de l’aplicació amb la Base de Dades. </li>
+</ul>
+<p><strong><u>Tècniques de mapatge</u></strong></p>
+<p>Entre les tècniques que aquestes eines fan servir per plasmar els mapes O-R,
+destaquem:</p>
+<ul>
+<li>Les que incrusten les definicions dins el codi de les classes</li>
+<li>Les que guarden les definicions en fitxers independents.</li>
+</ul>
+<p>Les primeres solen ser tècniques molt vinculades al llenguatge de programació,
+així per exemple, en C++ se solen fer servir macros i en Java/Kotlin
+s’utilitzen <strong>anotacions</strong>.</p>
+<p>Les tècniques de definició basades en fitxers independents del codi solen
+utilitzar el format <strong>XML</strong> , perquè és un llenguatge molt expressiu i
+fàcilment extensible.</p>
+<p>La major part d’eines accepten les dues tècniques de mapatge anteriors, i fins
+i tot permeten la convivència dins d'una mateixa aplicació.</p>
+<ul>
+<li>Les tècniques que utilitzen el propi llenguatge de programació per incrustar el mapatge dins el codi presenten una corba d’aprenentatge més baixa per a desenvolupadors experimentats en el llenguatge amfitrió, però per contra no serà possible aprofitar les definicions si es decideix canviar de llenguatge de programació.</li>
+<li>En canvi, fent servir les tècniques basades en XML sí que es poden reutilitzar les definicions per a diferents llenguatges, sempre que l’eina utilitzada estiga disponible en el llenguatge de programació requerit o bé si el format de les definicions segueix alguna especificació estàndard.</li>
+</ul>
+<p>A hores d'ara és difícil dir per on s'encaminaran els estàndards. Això sí, la
+major part d’eines utilitzen una sintaxi prou similar per a expressar les
+definicions del mapatge, encara que òbviament sempre hi ha diferències que no
+els fan del tot compatibles.</p>
+<p><strong><u>Llenguatges de consulta</u></strong></p>
+<p>El llenguatge de consulta més utilitzat per la major part d’eines és el
+llenguatge anomenat <strong>OQL</strong> (<strong>Object Query Language</strong>) o una variant del
+mateix. Es tracta d’un llenguatge especificat per l’ODMG. Presenta molta
+similitud amb SQL, ja que que els dos són llenguatges d’interrogació no
+procedimental, però l’OQL està totalment orientat a objectes. És a dir, en la
+consulta fem servir la sintaxi pròpia dels objectes i els resultats obtinguts
+retornen objectes o col·leccions d’objectes.</p>
+<p>Es tracta del llenguatge d’interrogació que també utilitzen moltes bases de
+dades orientades a objecte, la qual cosa el fa un dels estàndards més populars
+i coneguts. Hi ha altres llenguatges de consulta orientats a objectes, però no
+tan estesos com OQL.</p>
+<p><strong><u>Tècniques de sincronització</u></strong></p>
+<p>La sincronització amb la base de dades és segurament un dels aspectes més
+crítics de les eines de mapatge. Solen ser processos molt complexos, on trobem
+implicades sofisticades tècniques de programació per a poder descobrir els
+canvis que van patint els objectes (i així poder guardar-los), a crear i
+inicialitzar les noves instàncies que calga posar en joc dins l’aplicació
+d’acord amb les dades guardades o també a extreure la informació dels objectes
+per revertir-la a les taules del SGBD.</p>
+<p>Aquest és probablement l’aspecte que més diferencia les eines entre elles. Les
+principals tècniques utilitzades són la precompilació, la postcompilació i la
+reflexió. El llenguatge de programació suportat per l’eina influirà moltíssim
+en les solucions adoptades per resoldre la sincronització. Per exemple, C++
+admet precompilació, però no reflexió, mentre que Java/Kotlin admet
+postcompilació i reflexió.</p>
+<p><strong>JDO</strong> (<strong>Java Data Objects</strong>) és un estàndard de persistència per a Java (i
+per tant per a Kotlin) desenvolupat per Apache. El projecte inclou, a més de
+l’especificació de l’estàndard, el desenvolupament d’un marc de persistència
+basat en la postcompilació. Aquesta tècnica consisteix en realitzar dues
+compilacions a les classes que requereixen persistència. La primera,
+realitzada pel jdk, generarà els <em>bytecode</em> estàndards (és a dir els
+"executables" de Java/Kotlin, els que es poden executar en la màquina virtual
+Java). La segona compilació, fent servir les indicacions descrites en els
+documents de mapatge, modificarà els <em>bytecode</em> generats i hi afegirà nova
+funcionalitat necessària per dur a terme la persistència d’una forma
+transparent.</p>
+<p><strong>JPA</strong> (<strong>Java Persistence API</strong>) és també un estàndard de persistència. Es
+troba incorporat en el JDK des de la versió 5. Hi ha diverses biblioteques que
+el suporten, totes elles basades en el principi de la reflexió. Java és un
+llenguatge que en compilar les classes incorpora metadades amb informació
+pròpia de la classe, com ara l’estructura de dades interna, els mètodes que
+tinga disponibles, els paràmetres necessaris per invocar els mètodes, etc. La
+màquina virtual permet fer servir aquestes metadades per accedir a la
+informació real guardada en els objectes, per invocar algun dels seus mètodes,
+per construir noves instàncies, etc.</p>
+<p>La postcompilació, usada per JDO, presenta l’avantatge de ser més eficient, ja
+que incrusta codi compilat directament allà on cal, mentre que la tècnica de
+la reflexió ha d’anar llegint les metadades i interpretant la manera
+d’executar adequadament les ordres desitjades.</p>
+<p>Malauradament, JDO no ha acabat de quallar i poques iniciatives comercials
+l’han seguit. Per contra JPA, és la tècnica que han utilitzat els dos gegants
+fortament implantats (Hibernate i EJB). Tot sembla apuntar que serà l’escollit
+per cobrir l’estandardització de la persistència en Java/Kotlin.</p>
+<p>En aquestos apunts utilitzarem <strong>Hibernate</strong> , que es basa en JPA.</p>
+<p>Llicenciat sota la  <a href="http://creativecommons.org/licenses/by-nc-sa/2.5/">Llicència Creative Commons Reconeixement NoComercial
+CompartirIgual 2.5</a></p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../2__concepte_de_mapatge_objecterelacional/" class="btn btn-neutral float-left" title="2 - Concepte de mapatge objecte-relacional"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../4__arquitectura_hibernate/" class="btn btn-neutral float-right" title="4 - Arquitectura Hibernate">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../2__concepte_de_mapatge_objecterelacional/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../4__arquitectura_hibernate/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

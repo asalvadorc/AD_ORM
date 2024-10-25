@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://asalvadorc.github.io/AD_ORM/10__consultes_dactualitzaci/" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>10 - Consultes d'actualització - AD - Accés a Dades</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../css/extra.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "10 - Consultes d\u0027actualitzaci\u00f3";
+        var mkdocs_page_input_path = "10__consultes_dactualitzaci.md";
+        var mkdocs_page_url = "/AD_ORM/10__consultes_dactualitzaci/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="..">
+          <img src="../assets/logocaminas.png" class="logo" alt="Logo"/>
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">UD 3. Mapatge Objecte-Relacional</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../1__introducci/">1 - Introducció</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../2__concepte_de_mapatge_objecterelacional/">2 - Concepte de mapatge objecte-relacional</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../3__eines_de_mapatge/">3 - Eines de mapatge</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../4__arquitectura_hibernate/">4 - Arquitectura Hibernate</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../5__connexi_a_hibernate/">5 - Connexió a Hibernate</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../6__classes_generades/">6 - Classes generades</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../7__estructura_dels_fitxers_de_mapatge/">7 - Estructura dels fitxers de mapatge</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../8__sessions_i_objectes_hibernate/">8 - Sessions i objectes hibernate</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../9__consultes/">9 - Consultes</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">10 - Consultes d'actualització</a>
+    <ul class="current">
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../11__resum_del_llenguatge_hql/">11 - Resum del llenguatge HQL</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../exercicis/">Exercicis</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">AD - Accés a Dades</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">UD 3. Mapatge Objecte-Relacional</li>
+      <li class="breadcrumb-item active">10 - Consultes d'actualització</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="10-consultes-dactualitzacio">10 - Consultes d'actualització</h1>
+<p>Aquesta pregunta no té tanta importància com les altres, ja que
+actualitzacions ja sabíem fer amb els mètodes <strong>persist()</strong> , <strong>remove()</strong> i
+<strong>mege()</strong> de la sessió (o els seus equivalents ja deprecated <strong>save()</strong> ,
+<strong>delete()</strong> i <strong>update()</strong> )</p>
+<p>Pràcticament l'única utilitat serà fer actualitzacions massives, que afecten a
+més d'una fila (millor dit, més d'un objecte). HQL també permet fer-les.</p>
+<p>Lamentablement, aquestes sentències HQL no tornen cap classe, i per tant no
+podem posar res vàlid en el segon paràmetre de <strong>createQuery()</strong>. Per tant,
+per a aquest tipus de sentència ens veurem <strong>obligats a utilitzar la versió
+deprecated de createQuery()</strong> , la que no li posem un segon paràmetre</p>
+<p>Mirem la seua sintaxi:</p>
+<p><strong><u>DELETE</u></strong></p>
+<pre><code>DELETE [FROM] NomEntitat
+    [WHERE condició]
+</code></pre>
+<p>Esborrarà tots els objecte que acomplesquen la condició. Observeu que:</p>
+<ul>
+<li>FROM és opcional</li>
+<li>La clàusula WHERE és opcional. Si no es posa s'esborraran tots els objectes.</li>
+<li>En el FROM només es pot posar una entitat. No val a posar més d'una ni reunions ni res. Sí que es podran posar subconsultes en la clàusula WHERE, i en les consultes sí que es pot fer el que es vulga (reunions, ...).</li>
+</ul>
+<p>Per a executar la consulta s'utilitzarà el mètode
+<strong>Query.</strong><strong>executeUpdate()</strong> (en compte de <strong>Query.</strong><strong>list()</strong> per exemple).
+Aquest mètode torna un enter que serà el número de files (objectes)
+esborrades.</p>
+<p>I recordeu que s'ha de confirmar la transacció per a que tinguen efecte els
+canvis.</p>
+<p>Ací tenim un exemple, al qual li hem aplicat <strong>ROLLBACK</strong> al final, per a no
+fer efectiu l'esborrat. Però sí que diu quantes files "s'esborrarien".</p>
+<p>El següent exemple "esborraria" els Instituts de la província de Castelló, que
+són els que el seu codi comença per 12, i es diu quants serien els afectats,
+però després es rebutgen els canvis en fer <strong>rollback()</strong>. Copieu el següent
+codi al fitxer <strong>Exemple_51_EsborratMassiu.kt</strong> :</p>
+<pre><code>package exemples
+
+import org.hibernate.cfg.Configuration
+import java.util.logging.Level
+import java.util.logging.LogManager
+
+fun main(args: Array&lt;String&gt;) {
+    LogManager.getLogManager().getLogger("").setLevel(Level.SEVERE)
+    val sessio = Configuration().configure().buildSessionFactory().openSession()
+
+    val t = sessio.beginTransaction()
+
+    val files = sessio.createQuery("delete Institut where codi like '12%'").executeUpdate()
+
+    println("S'han esborrat " + files + " files.")
+
+    t.rollback()
+
+    sessio.close()
+}
+</code></pre>
+<p>Ens dirà que s'han esborrat 52 files, però després no les esborrarà de
+veritat.</p>
+<p><strong><u>UPDATE</u></strong></p>
+<pre><code>UPDATE [FROM] NomEntitat
+    SET propietat = valor [, propietat2 = valor2, ...]
+        [ WHERE condicio ]
+</code></pre>
+<p>Les observacions fetes en l'apartat de DELETE també valen ací. I observeu que
+podem modificar més d'un camp, separant-los per comes. Ací tenim un exemple,
+en el qual fem també <strong>rollback()</strong> per a deixar les coses com estaven. Copieu
+el següent codi al fitxer <strong>Exemple_52_ModificacioMassiva.kt</strong> :</p>
+<pre><code>package exemples
+
+import org.hibernate.cfg.Configuration
+import java.util.logging.Level
+import java.util.logging.LogManager
+
+fun main(args: Array&lt;String&gt;) {
+    LogManager.getLogManager().getLogger("").setLevel(Level.SEVERE)
+    val sessio = Configuration().configure().buildSessionFactory().openSession()
+
+    val t = sessio.beginTransaction()
+
+    val files = sessio.createQuery("update Poblacio set poblacio = poblacio *1.05 where poblacio &lt; 200").executeUpdate()
+
+    println("S'han modificat " + files + " files.")
+
+    t.rollback()
+
+    sessio.close()
+}
+</code></pre>
+<p><strong><u>INSERT</u></strong></p>
+<pre><code>INSERT INTO NomEntitat (llista_propietats)
+    Sentència_select
+</code></pre>
+<p>Ara tindrem els següents condicionants:</p>
+<ul>
+<li>No és vàlida la sentència INSERT INTO ... VALUES ... que servia per a introduir una fila donant-li els valors. Si volem fer això, millor utilitzar <strong>save()</strong>. Per tant només podrem introduir valors procedents d'una altra taula.</li>
+<li>La sentència SELECT pot ser qualsevol sentència HQL. Només hem de cuidar que els tipus tornats per la consulta siguen els que espera INSERT (és a dir, del mateix tipus que les propietats de la classe associada a la taula).</li>
+<li>Per a la propietat <strong>id</strong> , que és la que correspon a la clau principal, podem tenir 2 opcions: <ul>
+<li>es pot especificar en la llista de propietats, i aleshores li haurem de proporcionar un valor.</li>
+<li>es pot ometre, sempre i quan la propietat estiga definida com <strong>increment</strong> (no <strong>assigned</strong>); això vol dir que es correspon a un camp autoincrementat. Aleshores serà el SGBD qui li assignarà el valor</li>
+</ul>
+</li>
+</ul>
+<p>Aquest seria un exemple. En ell intentem introduir una nova comarca a partir
+d'una hipotètica taula de comarques noves (<em>NovesComarques</em>). No la podrem
+provar perquè no existeix aquesta taula, millor dit, aquesta classe. L'hauríem
+de crear, fer-li el mapatge, i posteriorment executar açò. Per tant ho veiem
+únicament a mode il·lustratiu:</p>
+<pre><code>val t = sessio.beginTransaction()
+val files = sessio.createQuery(&quot;insert into Comarca (nomC, provincia) &quot;  
+    \+ &quot; select n.nomC, n.provincia from NovesComarques n&quot;).executeUpdate()
+println(&quot;S'han introduït &quot; + files + &quot; files.&quot;)
+t.rollback()
+</code></pre>
+<p>Llicenciat sota la  <a href="http://creativecommons.org/licenses/by-nc-sa/2.5/">Llicència Creative Commons Reconeixement NoComercial
+CompartirIgual 2.5</a></p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../9__consultes/" class="btn btn-neutral float-left" title="9 - Consultes"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../11__resum_del_llenguatge_hql/" class="btn btn-neutral float-right" title="11 - Resum del llenguatge HQL">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../9__consultes/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../11__resum_del_llenguatge_hql/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
