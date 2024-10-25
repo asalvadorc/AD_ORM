@@ -12,7 +12,7 @@ theme:
 
 nav:
 
-- UD 3. Mapatge Objecte-Relacional(ORM):
+- UD 3. Mapatge Objecte-Relacional:
   - 1 - Introducció: 1__introducci.md
   - 2 - Concepte de mapatge objecte-relacional: 2__concepte_de_mapatge_objecterelacional.md
   - 3 - Eines de mapatge: 3__eines_de_mapatge.md

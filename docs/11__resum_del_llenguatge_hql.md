@@ -11,56 +11,55 @@ diferències amb SQL, al qual se sembla molt.
 
 Ací teniu uns quants exemples:
 
->```from Comarca```
+```from Comarca```
 
-Torna totes les instàncies de Comarques
+>Torna totes les instàncies de Comarques
 
->```from Comarca order by nomC```
+```from Comarca order by nomC```
 
-Torna totes les instàncies de Comarques ordenades per nom de comarca
+>Torna totes les instàncies de Comarques ordenades per nom de comarca
 
->```from Comarca where provincia='Castelló'```
+```from Comarca where provincia='Castelló'```
 
-Torna totes les comarques de la província de Castelló
+>Torna totes les comarques de la província de Castelló
 
->```from Comarca where provincia in ('Castelló','Alacant')```
+```from Comarca where provincia in ('Castelló','Alacant')```
 
-Torna totes les comarques de les províncies de Castelló i Alacant
+>Torna totes les comarques de les províncies de Castelló i Alacant
 
->```from Poblacio where altura between 700 and 750```
+```from Poblacio where altura between 700 and 750```
 
-Torna totes les poblacions amb una altura entre 700 i 750 m,
+>Torna totes les poblacions amb una altura entre 700 i 750 m
 
->```from Institut where codpostal is null```
+```from Institut where codpostal is null```
 
-Torna els instituts que no tenen codi postal (no hi ha ningun)
+>Torna els instituts que no tenen codi postal (no hi ha ningun)
 
->```from Comarca where nomC like 'A%'```
+```from Comarca where nomC like 'A%'```
 
-Torna les comarques el nom de les quals comença per A
+>Torna les comarques el nom de les quals comença per A
 
->```select provincia, count(*) from Comarca group by provincia```
+```select provincia, count(*) from Comarca group by provincia```
 
-Torna les províncies i el número de comarques en cadascuna
+>Torna les províncies i el número de comarques en cadascuna
 
->```select poblacio.nom , count(*) from Institut group by poblacio.nom```
+```select poblacio.nom , count(*) from Institut group by poblacio.nom```
 
-Torna el nom de la població i el número d'instituts que té (només d'aquelles
+>Torna el nom de la població i el número d'instituts que té (només d'aquelles
 que tenen algun institut)
 
->```select comarca.nomC , avg(altura) from Poblacio group by comarca.nomC having avg(altura) > 700 
+```select comarca.nomC , avg(altura) from Poblacio group by comarca.nomC having avg(altura) > 700 
 ```
-
-Torna el nom de la comarca i l'altura mitjana d'aquelles comarques que tenen
+>Torna el nom de la comarca i l'altura mitjana d'aquelles comarques que tenen
 una altura mitjana més gran que 700
 
->```from Poblacio where altura > (select avg(altura) from Poblacio)```
+```from Poblacio where altura > (select avg(altura) from Poblacio)```
 
-Torna les poblacions que tenen una altura major que la mitjana
+>Torna les poblacions que tenen una altura major que la mitjana
 
->```from Poblacio p1 where p1.altura > (select avg(altura) from Poblacio p2 where p2.comarca=p1.comarca)```
+```from Poblacio p1 where p1.altura > (select avg(altura) from Poblacio p2 where p2.comarca=p1.comarca)```
 
-Torna les poblacions que tenen una altura major que la mitjana de la seua
+>Torna les poblacions que tenen una altura major que la mitjana de la seua
 comarca
 
 HQL també admet reunions en les classes. Per a fer una reunió normal, podem

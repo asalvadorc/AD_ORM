@@ -1,5 +1,5 @@
 ---
-title:  "Accés a Dades - Eines de mapatge Objecte-Relacional (ORM)"
+title:  "Accés a Dades - Eines de mapatge Objecte-Relacional"
 ---
 
 ![](T5_Portada.png)
