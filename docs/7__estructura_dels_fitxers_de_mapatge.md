@@ -50,7 +50,9 @@ contingut de **Comarques.hbm.xml**. Posem a un costat l'estructura de la
 taula, i a l'altre l'estructura de l'objecte:
 
 
-![](T5_7_hbm_1.png)|![](T5_7_hbm_2.png)|![](T5_7_hbm_3.png)
+![](T5_7_hbm_2.png)|![](T5_7_hbm_1.png)
+---|---
+![](T5_7_hbm_3.png)
                  
 
 

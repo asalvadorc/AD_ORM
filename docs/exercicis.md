@@ -8,17 +8,18 @@ Crea un projecte nou de l'estil de **Java Enterprise** anomenat
 PostgreSQL.
 
   * Has de fer el mapatge utilitzant **anotacions** (no els fitxer **hbm.xml**)
-  * Fes el mapatge de les taules **RUTA** i **PUNT******, situades en la Base de Dades**rutes** a la qual pot accedir l'usuari **rutes**(contrasenya **rutes**) i situada en el servidor de l'Institut ****(**89.36.214.106**). Guarda-les en un paquet anomenat **classes**. Veuràs que en el resultat apareixerà també la classe **PuntPK.java**. És a causa de que la clau principal de la taula PUNTS està formada per dos camps. És la manera que té Hibernate de reflectir-ho.
+  * Fes el mapatge de les taules **RUTA** i **PUNT**, situades en la Base de Dades **rutes** a la qual pot accedir l'usuari **rutes** (contrasenya **rutes**) i situada en el servidor de l'Institut (**89.36.214.106**). Guarda-les en un paquet anomenat **classes**. Veuràs que en el resultat apareixerà també la classe **PuntPK.java**. És a causa de que la clau principal de la taula PUNTS està formada per dos camps. És la manera que té Hibernate de reflectir-ho.
   * Tria **tots** els camps (que es convertiran en propietats). Canvia el nom d'alguna de les propietats
   * Veuràs que en el resultat a més de les classes **Ruta.java** i **Punt.java** apareixerà també la classe **PuntPK.java**. És a causa de que la clau principal de la taula PUNTS està formada per dos camps. És la manera que té Hibernate de reflectir-ho.
-  * Crea't el fitxer Kotlin **VeureRutes.kt** , que serà un programa senzill que visualitze les rutes, i el número de punts, ordenades per nom de ruta, a més dels noms dels punts.. Ha de ser per mig d'una **consulta HQL**(el més senzilla possible), i evidentment el programa ha de ser independent del número de rutes existent en aquest moment a la Base de Dades. Intenta que no apareguen tots els warnings que apareixen per defecte. El més normal és que t'aparega el següent error
+  * Crea't el fitxer Kotlin **VeureRutes.kt** , que serà un programa senzill que visualitze les rutes, i el número de punts, ordenades per nom de ruta, a més dels noms dels punts. Ha de ser per mig d'una **consulta HQL** (el més senzilla possible), i evidentment el programa ha de ser independent del número de rutes existent en aquest moment a la Base de Dades. Intenta que no apareguen tots els warnings que apareixen per defecte. El més normal és que t'aparega el següent error
 
 >```Repeated column in mapping for entity: classes.Punt column: num_r (should be mapped with insert="false" update="false")```
 
 Per a corregir-ho has d'afegir a la classe **Punt.java** al final de tot, on
-apareix l'anotació **@JoinColumn** , el que està en negreta a continuació.
+apareix l'anotació **@JoinColumn**, el que està en negreta a continuació.
 
-<div style="background-color: #F0F0F0; color: black; padding: 5px;">
+
+<div style="background-color: #d6eaf8; color: black; padding: 5px;">
 @ManyToOne  
 @JoinColumn(name = "num_r", referencedColumnName = "num_r", nullable = false, <b>insertable = false, updatable = false</b>) 
 </div><p></p>
@@ -58,23 +59,23 @@ Penyagolosa
 
 ## ![](icon_activity.gif) Exercici 5.2
 
-Sobre el projecte de **Tema5_Hibernate_PostgreSQL_geo_ad** , on tenim el
-mapatge de les taules **COMARCA** , **POBLACIO** i **INSTITUT** , creeu-vos un
-paquet anomenat **exercicis** , on col·locareu les classes d'aquest exercici.
+Sobre el projecte de **Tema5_Hibernate_PostgreSQL_geo_ad**, on tenim el
+mapatge de les taules **COMARCA**, **POBLACIO** i **INSTITUT**, creeu-vos un
+paquet anomenat **exercicis**, on col·locareu les classes d'aquest exercici.
 
 Per a visualitzar les coses d'una forma un poc més agradable anem a utilitzar
 les llibreries gràfiques **Java AWT** i **Javax Swing**. Amb aquestes
 llibreries incorporarem:
 
   * **JPanel** i **JScrollPane** , per a contenir altres objectes (aquest últim amb botons de scroll si són necessaris).
-  * **JLabel** , per a etiquetes
-  * **JText** , per a quadres de text (on poder posar informació)
-  * **JTextArea** , és un quadre de text, però més gran. Nosaltres l'utilitzarem per a visualitzar informació extensa, i per tant el farem no editable.
-  * **JButton** , per a botons. Estarà esperant a que l'apretem (ActionListener)
+  * **JLabel**, per a etiquetes
+  * **JText**, per a quadres de text (on poder posar informació)
+  * **JTextArea**, és un quadre de text, però més gran. Nosaltres l'utilitzarem per a visualitzar informació extensa, i per tant el farem no editable.
+  * **JButton**, per a botons. Estarà esperant a que l'apretem (ActionListener)
 
 Tot açò anirà en un fitxer que anomenarem **Ex5_2_VeurePoblesComarca.kt**
 
-I vosaltres haureu de completar el mètode **VisualitzaCom(comarca: String)** ,
+I vosaltres haureu de completar el mètode **VisualitzaCom(comarca: String)**,
 per a que si no existeix la comarca, es diga que no existeix dins del
 JTextArea, i si existeix, que es vegen **els seus pobles**(si vols pots
 millorar-lo per a que es vegen en ordre alfabètic).
@@ -147,11 +148,11 @@ Aquest seria un exemple d'utilització:
 
 ## ![](icon_activity.gif) Exercici 5.3
 
-Anem a fer unes quantes millores a l'exemple anterior. ****Les millores seran
+Anem a fer unes quantes millores a l'exemple anterior. Les millores seran
 les següents:
 
-  * (70%) Substitueix el quadre de text per un **JComboBox** , i elimina el botó. Recorda que el component **JCombBox** funciona de la segünet manera: 
-    * Per a obtenir l'element seleccionat utilitzarem el mètode******.getSelectedItem()**
+  * (70%) Substitueix el quadre de text per un **JComboBox**, i elimina el botó. Recorda que el component **JCombBox** funciona de la segünet manera: 
+    * Per a obtenir l'element seleccionat utilitzarem el mètode **.getSelectedItem()**
     * Per a omplir el ComboBox haurem de fer una consulta prèvia amb els noms de les comarques (en principi amb els noms és suficient). Podrem anar afegint elements al ComboBox amb el mètode **.addItem()**
   * (15%) Substitueix el **JTextArea** on mostrem els pobles de la comarca per un **JList**. Aquest component serà una llista, i podrem seleccionar cada element de la llista. El seu funcionament és així: 
     * Per a anar omplint el **JList** , no és tant senzill com el **JComboBox**. Ens fa falta un **DefaultListModel** , i construir el **JList** a partir d'ell. Posteriorment afegirem elements al **DefaultListModel** , i això suposarà que es veuran en el **JList**. Ja tenim creat aquest DefaultListModel, i es diu **listModel**
