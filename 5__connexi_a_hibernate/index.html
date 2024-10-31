@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://asalvadorc.github.io/AD_ORM/5__connexi_a_hibernate/" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>5 - Connexió a Hibernate - AD - Accés a Dades</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../css/extra.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "5 - Connexi\u00f3 a Hibernate";
+        var mkdocs_page_input_path = "5__connexi_a_hibernate.md";
+        var mkdocs_page_url = "/AD_ORM/5__connexi_a_hibernate/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="..">
+          <img src="../assets/logocaminas.png" class="logo" alt="Logo"/>
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">UD 3. Mapatge Objecte-Relacional</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../1__introducci/">1 - Introducció</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../2__concepte_de_mapatge_objecterelacional/">2 - Concepte de mapatge objecte-relacional</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../3__eines_de_mapatge/">3 - Eines de mapatge</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../4__arquitectura_hibernate/">4 - Arquitectura Hibernate</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">5 - Connexió a Hibernate</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#51-hql-consultes-senzilles">5.1 - HQL: consultes senzilles</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#52-comencant-a-programar">5.2 - Començant a programar</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../6__classes_generades/">6 - Classes generades</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../7__estructura_dels_fitxers_de_mapatge/">7 - Estructura dels fitxers de mapatge</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../8__sessions_i_objectes_hibernate/">8 - Sessions i objectes hibernate</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../9__consultes/">9 - Consultes</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../10__consultes_dactualitzaci/">10 - Consultes d'actualització</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../11__resum_del_llenguatge_hql/">11 - Resum del llenguatge HQL</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../exercicis/">Exercicis</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">AD - Accés a Dades</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">UD 3. Mapatge Objecte-Relacional</li>
+      <li class="breadcrumb-item active">5 - Connexió a Hibernate</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="5-connexio-a-hibernate">5 - Connexió a Hibernate</h1>
+<p>Des d'<strong>IntelliJ Idea</strong> no cal cap tipus d'instal·lació. Això sí, haurem
+d'utilitzar la versió <strong>ULTIMATE</strong> per a poder fer projectes que connecten a
+Hibernate.</p>
+<p>Concretament seran projectes de tipus <strong>Jakarta EE</strong> , que és l'evolució de
+<strong>Java Enterprise</strong> , i com dèiem només estan disponibles en la versió
+<strong>Ultimate</strong>.</p>
+<p>Durant aquest tema, cada connexió a una Base de Dades la farem en un projecte
+diferent, al contrari que en temes anteriors, on ho vam col·locar tot en el
+mateix projecte.</p>
+<p>Aquestos projectes seran a més de tipus <strong>Maven</strong> , que es caracteritzen per
+no haver d'incorporar les dependències (Drivers) a mà, sinó que es
+reflecteixen automàticament en un fixter <strong>pom.xml</strong> , i ell s'encarrega de
+baixar tots els drivers necessaris. Ho farem així perquè, a diferència del que
+hem fet fins ara que hi havia pocs drivers a incorporar, per a <strong>Hibernate</strong>
+seran molts .jar, per tant és molt més còmode un projecte Maven, que ell
+s'encarregarà de baixartots els drivers necessaris</p>
+<p>Els passos a seguir en cada projecte seran sempre els mateixos:</p>
+<ul>
+<li>Crear un projecte de tipus <strong>Jakarta EE</strong>(en versions anterior, <strong>Java Enterprise</strong>), amb la implementació de <strong>JPA</strong> per <strong>Hibernate</strong></li>
+<li>Crear la connexió a la Base de Dades</li>
+<li>Afegir la configuració de persistència d'Hibernate, per a generar el fitxer <strong>hiernate.cfg.xml</strong></li>
+<li>Mapejar les taules a classes</li>
+<li>Incorporar el Driver del SGBD a utilitzar (PostgreSQL en l'exemple)</li>
+<li>Acabar de configurar el fitxer <strong>hibernate.cfg.xml</strong></li>
+</ul>
+<p>El següent vídeo explica tot el procés de creació del projecte.</p>
+<iframe src="https://slides.com/aliciasalvador/ad-t5-connexiohibernate/embed" width="576" height="420" title="Copy of AD-T5-ConnexioHibernate" scrolling="no" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+<p></p>
+
+<div style="background-color: #d6eaf8; color: black; padding: 5px;"> 
+<b>Nota</b><br>
+En versions anteriors, en el fitxer <b>hibernate.cfg.xml</b> no es guardava
+usuari ni contrasenya, i després li feia falta el dialecte de PostgreSQL.
+Concretament s'havien d'afegir les següents línies:
+   <pre><code>
+        &ltproperty name="connection.username"&gtgeo_ad&lt/property&gt
+        &ltproperty name="connection.password"&gtgeo_ad&lt/property&gt
+        &ltproperty name="hibernate.dialect"&gtorg.hibernate.dialect.PostgreQL93Dialect&lt/property&gt
+  </code></pre>
+  </div>
+<p></p>
+<!--![](T5_con.png)-->
+
+<p>I observeu que en aquest exemple hem optat per incorporar el Driver
+directament, ja que el teníem des del tema passat. Podríem haver optat també
+per incorporar-lo a l'estil Maven, que seria senzillament incorporar en el
+fitxer <strong>pom.xml</strong> en l'apartat de <strong>&lt;dependencies&gt;</strong> la següent. Atenció: si
+ja heu incorporat el Driver de PostgreSQL al projecte, no cal que fey el que
+va a continuació</p>
+<pre><code>        &lt;dependency&gt;
+            &lt;groupId&gt;org.postgresql&lt;/groupId&gt;
+            &lt;artifactId&gt;postgresql&lt;/artifactId&gt;
+            &lt;version&gt;42.2.24&lt;/version&gt;
+        &lt;/dependency&gt;
+</code></pre>
+<p>I aquestes són les dades de connexió a la Base de Dades <strong>geo_ad</strong> de
+<strong>PostgreSQL</strong> :</p>
+<p><img alt="" src="../T5_5_1.png" /></p>
+<p>Si la connexió fóra a <strong>MySQL</strong> la BD <strong>factura</strong> , recordem que les dades de
+connexió serien:</p>
+<p><img alt="" src="../T5_5_2.1.png" /></p>
+<p>I fins i tot podem mapejar les taules d'una Base de Dades <strong>SQLite</strong> , amb una
+connexió com aquesta:</p>
+<p><img alt="" src="../T5_5_3.1.png" /></p>
+<h2 id="51-hql-consultes-senzilles">5.1 - HQL: consultes senzilles</h2>
+<p>Podem provar consultes senzilles de HQL, que és el llenguatge propi de HQL,
+paregut a SQL, però utilitzant objectes.</p>
+<p>Ho podem fer obrint una consola d'Hibernate, des de la finestra de
+Persistència, dins de la configuració d'<strong>Hibernate</strong> sobre
+<strong>hibernate.cfg.xml</strong> , i amb el botó de la dreta triar <strong>Console</strong></p>
+<p><img alt="" src="../T5_5_1_1.png" /></p>
+<p>S'obrirà un apartat a la part de baix, i com que la connexió és sobre la que
+havíem fet en la Base de Dades, si en la finestra <strong>Database</strong> estem
+connectats, podrem fer les consultes <strong>HQL</strong>. La primera podria ser aquesta
+<strong>from Comarca</strong>. Hem de respectar escrupulosament majúscules i minúscules, ja
+que en definitiva estem accedint a les classes Java.</p>
+<p><img alt="" src="../T5_5_1_2.png" /></p>
+<h2 id="52-comencant-a-programar">5.2 - Començant a programar</h2>
+<p>Com que hem fet un projecte Maven, totes les llibreries necessàries estaran ja
+incorporades.</p>
+<p>I si ja hem incorporat el Driver de PostgreSQL, bé directament tal com feem en
+el Tema 4, bé incorporant la dependència en el fitxer pom.xml, aleshores ja
+estem en condicions de començar a programar.</p>
+<p>Tots els programes que farem, els posarem dins del paquet <strong>exemples</strong> , que
+ha d'estar dins de <strong>src - &gt; main -&gt; kotlin</strong>. Aquest primer programa el podem
+guardar amb el nom <strong>Exemple_01_PrimerAcces.kt</strong> :</p>
+<pre><code>package exemples
+
+import org.hibernate.cfg.Configuration
+import classes.Comarca
+
+fun main(args: Array&lt;String&gt;) {
+    val sf = Configuration().configure().buildSessionFactory()
+    val sessio = sf.openSession()
+    val com = sessio.get("classes.Comarca", "Alt Maestrat") as Comarca
+    print("Comarca " + com.nomC + ": ")
+    print(com.provincia)
+    println(" (" + com.poblacions.size + " pobles)")
+    sessio.close()
+}
+</code></pre>
+<p>L'execució ens haurà donat molts avisos, que són un poc pesats, però
+l'execució (la línia en negre quasi al final) ha eixit bé</p>
+<p><img alt="" src="../T5_5_2_1.png" /></p>
+<p>El programa a carregat la comarca de l'Alt Maestrat, i ens ha dit la província
+i el número de pobles</p>
+<p>Anem a llevar aquetsos missatge, que són únicament de INFO. Senzillament li
+direm que mostre únicament els errors <strong>severs</strong>.</p>
+<pre><code>LogManager.getLogManager().getLogger("").setLevel(Level.SEVERE)
+</code></pre>
+<p>Aprofitarem per a canviar un poc el programa, i ara traurem també el nom dels
+pobles de la comarca Alt Maestrat. Així veiem també el potencial, ja que és
+comodíssim accedir els pobles de la comarca. Guardeu el següent programa amb
+el nom <strong>Exemple_02_SegonAcces.kt</strong> :</p>
+<pre><code>package exemples
+
+import classes.Comarca
+import org.hibernate.cfg.Configuration
+import java.util.logging.Level
+import java.util.logging.LogManager
+
+fun main(args: Array&lt;String&gt;) {
+    LogManager.getLogManager().getLogger("").setLevel(Level.SEVERE)
+    val sessio = Configuration().configure().buildSessionFactory().openSession()
+
+    val com = sessio.get("classes.Comarca", "Alt Maestrat") as Comarca
+    print("Comarca " + com.nomC + ": ")
+    print(com.provincia)
+    println(" (" + com.poblacions.size + " pobles)")
+
+    for (p in com.poblacions)
+        println("\t" + p.nom)
+    sessio.close()
+}
+</code></pre>
+<p>I aquest serà el resultat:</p>
+<p><img alt="" src="../T5_5_2_3.png" /></p>
+<p>Llicenciat sota la  <a href="http://creativecommons.org/licenses/by-nc-sa/2.5/">Llicència Creative Commons Reconeixement NoComercial
+CompartirIgual 2.5</a></p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../4__arquitectura_hibernate/" class="btn btn-neutral float-left" title="4 - Arquitectura Hibernate"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../6__classes_generades/" class="btn btn-neutral float-right" title="6 - Classes generades">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../4__arquitectura_hibernate/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../6__classes_generades/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

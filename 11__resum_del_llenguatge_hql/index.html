@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://asalvadorc.github.io/AD_ORM/11__resum_del_llenguatge_hql/" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>11 - Resum del llenguatge HQL - AD - Accés a Dades</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../css/extra.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "11 - Resum del llenguatge HQL";
+        var mkdocs_page_input_path = "11__resum_del_llenguatge_hql.md";
+        var mkdocs_page_url = "/AD_ORM/11__resum_del_llenguatge_hql/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="..">
+          <img src="../assets/logocaminas.png" class="logo" alt="Logo"/>
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">UD 3. Mapatge Objecte-Relacional</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../1__introducci/">1 - Introducció</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../2__concepte_de_mapatge_objecterelacional/">2 - Concepte de mapatge objecte-relacional</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../3__eines_de_mapatge/">3 - Eines de mapatge</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../4__arquitectura_hibernate/">4 - Arquitectura Hibernate</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../5__connexi_a_hibernate/">5 - Connexió a Hibernate</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../6__classes_generades/">6 - Classes generades</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../7__estructura_dels_fitxers_de_mapatge/">7 - Estructura dels fitxers de mapatge</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../8__sessions_i_objectes_hibernate/">8 - Sessions i objectes hibernate</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../9__consultes/">9 - Consultes</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../10__consultes_dactualitzaci/">10 - Consultes d'actualització</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">11 - Resum del llenguatge HQL</a>
+    <ul class="current">
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../exercicis/">Exercicis</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">AD - Accés a Dades</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">UD 3. Mapatge Objecte-Relacional</li>
+      <li class="breadcrumb-item active">11 - Resum del llenguatge HQL</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="11-resum-del-llenguatge-hql">11 - Resum del llenguatge HQL</h1>
+<p>Veurem d'una manera molt ràpida el llenguatge HQL. Sobretot insistirem en les
+diferències amb SQL, al qual se sembla molt.</p>
+<ul>
+<li>La clàusula <strong>SELECT</strong> és opcional. Si no la posem equival a agafar totes les propietats (és a dir, equivalent a SELECT * de SQL). És una operació molt habitual, ja que d'aquesta manera la llista d'objectes tornats és de la classe marcada en el from.</li>
+<li>Es poden utilitzar àlies de les classes, posant <strong>AS</strong> després de la classe i abans de l'àlies. També podem prescindir del AS. Si utilitzem àlies, per a fer referència a la classe haurem d'utilitzar sempre l'àlies. Per exemple <strong>FROM Comarques AS c</strong> , o senzillament <strong>FROM Comarques c</strong>.</li>
+<li>La clàusula <strong>WHERE</strong> és opcional. Si no la posem equival a agafar de totes les instàncies de la classe associada (és a dir, de totes les files de la taula).</li>
+<li>S'admeten les clàusules <strong>GROUP BY</strong> , <strong>HAVING</strong> i <strong>ORDER BY</strong> , que funcionen igual que en SQL.</li>
+<li>S'admeten <strong>subconsultes</strong> , si és que el SGBD les admet, clar.</li>
+</ul>
+<p>Ací teniu uns quants exemples:</p>
+<p><code>from Comarca</code></p>
+<blockquote>
+<p>Torna totes les instàncies de Comarques</p>
+</blockquote>
+<p><code>from Comarca order by nomC</code></p>
+<blockquote>
+<p>Torna totes les instàncies de Comarques ordenades per nom de comarca</p>
+</blockquote>
+<p><code>from Comarca where provincia='Castelló'</code></p>
+<blockquote>
+<p>Torna totes les comarques de la província de Castelló</p>
+</blockquote>
+<p><code>from Comarca where provincia in ('Castelló','Alacant')</code></p>
+<blockquote>
+<p>Torna totes les comarques de les províncies de Castelló i Alacant</p>
+</blockquote>
+<p><code>from Poblacio where altura between 700 and 750</code></p>
+<blockquote>
+<p>Torna totes les poblacions amb una altura entre 700 i 750 m</p>
+</blockquote>
+<p><code>from Institut where codpostal is null</code></p>
+<blockquote>
+<p>Torna els instituts que no tenen codi postal (no hi ha ningun)</p>
+</blockquote>
+<p><code>from Comarca where nomC like 'A%'</code></p>
+<blockquote>
+<p>Torna les comarques el nom de les quals comença per A</p>
+</blockquote>
+<p><code>select provincia, count(*) from Comarca group by provincia</code></p>
+<blockquote>
+<p>Torna les províncies i el número de comarques en cadascuna</p>
+</blockquote>
+<p><code>select poblacio.nom , count(*) from Institut group by poblacio.nom</code></p>
+<blockquote>
+<p>Torna el nom de la població i el número d'instituts que té (només d'aquelles
+que tenen algun institut)</p>
+</blockquote>
+<p><code>select comarca.nomC , avg(altura) from Poblacio group by comarca.nomC having avg(altura) &gt; 700</code></p>
+<blockquote>
+<p>Torna el nom de la comarca i l'altura mitjana d'aquelles comarques que tenen
+una altura mitjana més gran que 700</p>
+</blockquote>
+<p><code>from Poblacio where altura &gt; (select avg(altura) from Poblacio)</code></p>
+<blockquote>
+<p>Torna les poblacions que tenen una altura major que la mitjana</p>
+</blockquote>
+<p><code>from Poblacio p1 where p1.altura &gt; (select avg(altura) from Poblacio p2 where p2.comarca=p1.comarca)</code></p>
+<blockquote>
+<p>Torna les poblacions que tenen una altura major que la mitjana de la seua
+comarca</p>
+</blockquote>
+<p>HQL també admet reunions en les classes. Per a fer una reunió normal, podem
+posar la condició en el where i ja està, però si volem fer una reunió externa
+(un <strong>left join</strong> per exemple) no ens valdrà aquesta opció, i haurem de fer la
+reunió.</p>
+<p>La sintaxi de la reunió és diferent en HQL.</p>
+<p>En <strong>SQL</strong> posàvem la condició en l'apartat <strong>ON</strong> , després d'haver posat les
+taules, i posàvem una condició d'igualtat entre els camps d'una i altra taula</p>
+<blockquote>
+<p><code>SELECT ... FROM POBLACIO LEFT JOIN INSTITUT ON POBLACIO.cod_m=INSTITUT.cod_m</code></p>
+</blockquote>
+<p>En canvi en <strong>HQL</strong> després de les taules no posem <strong>ON</strong> , sinó que posarem
+l'enllaç entre les dues taules. Aquest enllaç coincideix amb el nom de la
+col·lecció d'elements de l'altre taula. En el cas de l'exemple que estem
+veient és <strong>institutses</strong>. Per tant una reunió entre <strong>Poblacions</strong> i
+<strong>Instituts</strong> es definiria així</p>
+<blockquote>
+<p><code>from Poblacio p left join p.instituts</code></p>
+</blockquote>
+<p>Vejam un exemple un poc més elaborat, on traurem el nom de la població amb el
+número d'instituts que té, fins i tot d'aquells que no tenen institut</p>
+<blockquote>
+<p><code>select p.nom, count(i.codi) from Poblacio p left join p.instituts i group by p.nom order by p.nom</code></p>
+</blockquote>
+<p>Llicenciat sota la  <a href="http://creativecommons.org/licenses/by-nc-sa/2.5/">Llicència Creative Commons Reconeixement NoComercial
+CompartirIgual 2.5</a></p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../10__consultes_dactualitzaci/" class="btn btn-neutral float-left" title="10 - Consultes d'actualització"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../exercicis/" class="btn btn-neutral float-right" title="Exercicis">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../10__consultes_dactualitzaci/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../exercicis/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

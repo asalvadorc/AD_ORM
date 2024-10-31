@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://asalvadorc.github.io/AD_ORM/8__sessions_i_objectes_hibernate/" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>8 - Sessions i objectes hibernate - AD - Accés a Dades</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../css/extra.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "8 - Sessions i objectes hibernate";
+        var mkdocs_page_input_path = "8__sessions_i_objectes_hibernate.md";
+        var mkdocs_page_url = "/AD_ORM/8__sessions_i_objectes_hibernate/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="..">
+          <img src="../assets/logocaminas.png" class="logo" alt="Logo"/>
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">UD 3. Mapatge Objecte-Relacional</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../1__introducci/">1 - Introducció</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../2__concepte_de_mapatge_objecterelacional/">2 - Concepte de mapatge objecte-relacional</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../3__eines_de_mapatge/">3 - Eines de mapatge</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../4__arquitectura_hibernate/">4 - Arquitectura Hibernate</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../5__connexi_a_hibernate/">5 - Connexió a Hibernate</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../6__classes_generades/">6 - Classes generades</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../7__estructura_dels_fitxers_de_mapatge/">7 - Estructura dels fitxers de mapatge</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">8 - Sessions i objectes hibernate</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#81-transaccions">8.1 - Transaccions</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#82-estats-dun-objecte-hibernate">8.2 - Estats d'un objecte Hibernate</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#83-carrega-dobjectes-metodes-load-i-get">8.3 - Càrrega d'objectes: mètodes load() i get()</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#84-insercio-modificacio-i-esborrat-dobjectes">8.4 - Inserció, modificació i esborrat d'objectes</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../9__consultes/">9 - Consultes</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../10__consultes_dactualitzaci/">10 - Consultes d'actualització</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../11__resum_del_llenguatge_hql/">11 - Resum del llenguatge HQL</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../exercicis/">Exercicis</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">AD - Accés a Dades</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">UD 3. Mapatge Objecte-Relacional</li>
+      <li class="breadcrumb-item active">8 - Sessions i objectes hibernate</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="8-sessions-i-objectes-hibernate">8 - Sessions i objectes hibernate</h1>
+<p>En aquesta secció comentarem el comportament de les sessions i dels objectes
+Hibernate (les classes creades per Hibernate).</p>
+<p>Recordem que el procés per a arribar a una sessió era <strong>Configuration - &gt;
+SessionFactory -&gt; Session</strong>. Les sentències serien aquestes:</p>
+<pre><code>val cfg = Configuration().configure()
+val sf = cfg.buildSessionFactory()
+val sessio = sf.openSession()
+</code></pre>
+<p>La primera sentència carrega el fitxer de configuració <strong>hibernate.cfg.xml</strong> ,
+i inicialitza l'entorn d'Hibernate. A partir d'aquest moment podem utilitzar
+l'objecte Configuration per crear el <strong>SessionFactory</strong>.</p>
+<h2 id="81-transaccions">8.1 - Transaccions</h2>
+<p>El primer que hauríem de fer notar és que si el SGBD admet transaccions, les
+possibles modificacions que fem sobre una Base de Dades a través d'Hibernate
+no es guardaran si no posem en marxa una transacció. Per tant, si volem fer
+actualitzacions (insercions, esborrats i/o modificacions), el primer que
+haurem de fer en la sessió serà començar una transacció. Al final podrem
+confirmar amb <strong>commit</strong> o rebutjar totes les actualitzacions amb
+<strong>rollback</strong>. En el següent codi inserim una nova comarca. Utilitzem el mètode
+<strong>save</strong> de la sessió, però ja el veurem més avant. Ara només volem il·lustrar
+una transacció. No farem aquest exemple, ja que tots ens estem connectant com
+el mateix usuari a la mateixa Base de Dades, aleshores només el primer ho
+podria fer, i a la reste ens donaria error perquè ja existiria la fila
+corresponent a aquesta nova comarca (restricció de clau principal)</p>
+<pre><code>1   val sessio = Configuration().configure().buildSessionFactory().openSession()
+2   val t = sessio.beginTransaction()
+3
+4   val com = Comarca()
+5   com.nomC = "Columbretes"
+6   com.provincia = "Castelló"
+7   sessio.save(com)
+8
+9   t.commit()
+10  sessio.close()
+</code></pre>
+<p>En cas de no haver posat les dues sentències de les línies 2 i 9, no hauria
+hagut cap modificació. El mètode <strong>beginTransaction()</strong> ha fet començar la
+transacció, i el mètode <strong>commit()</strong> l'ha confirmada definitivament. Si en
+aquest moment vulguérem començar una altra transacció seria suficient amb
+<strong>t.begin()</strong>.</p>
+<p>Per a no haver d'estar sempre pendents de transaccions, es podria posar en
+mode <strong>autocommit</strong> , és a dir, que automàticament faça un commit després de
+cada actualització (després de cada <strong>save()</strong> , <strong>delete()</strong> o <strong>update()</strong>
+). Seria canviar en el fitxer <strong>hibernate.cfg.xml</strong> , posant la següent
+propietat entre les del <strong>&lt; session-factory&gt;</strong>:</p>
+<pre><code>&lt;property name=&quot;hibernate.connection.autocommit&quot;&gt;true&lt;/property&gt;
+</code></pre>
+<p>Tanmateix no és tan fiable, i us recomane que utilitzeu transaccions, és a
+dir, tenir el autocommit a false com estava per defecte i gestionar les
+transaccions manualment.</p>
+<h2 id="82-estats-dun-objecte-hibernate">8.2 - Estats d'un objecte Hibernate</h2>
+<p>Els objectes de les classes que Hibernate ens ha ajudat a crear poden estar en
+més d'un estat, si mirem la seua sincronització amb la Base de Dades:</p>
+<ul>
+<li><strong>Transitori</strong> : quan l'objecte s'ha creat, però no s'ha associat a cap sessió. És a dir, ja s'ha creat amb <strong>la creació de l'objecte</strong> i potser estiga buit o no (ja se li ha posat algun valor a alguna propietat), però encara no s'ha associat a cap sessió. Es podrà associar per exemple amb <strong>save()</strong> per a guardar l'objecte com hem vist en l'exemple de l'apartat anterior, o per exemple amb <strong>load()</strong> , com havíem vist en exemples anteriors per a agafar des de la Base de Dades.</li>
+<li><strong>Persistent</strong> : quan l'objecte ja s'ha associat amb una sessió i per tant té una representació en la Base de Dades i un valor identificador. Es pot haver guardat o carregat. Hibernate detectarà qualsevol canvi fet sobre un objecte persistent i sincronitzarà l'estat quan es complete la unitat de treball. I per a això ja s'encarregarà ell de fer els INSERT, DELETE o UPDATE en la Base de Dades. Nosaltres no ens haurem de preocupar.</li>
+<li><strong>Separat</strong> : és un objecte persistent, però que la seua sessió ha finalitzat. Es pot utilitzar, i fins i tot canviar l'estat, però no tindrà efecte aquestos canvies la Base de Dades, a no ser que es torne a associar una altra vegada amb una sessió, és a dir, si es torna a fer persistent. De fet, és una tècnica de treball, utilitzar objectes separats quan l'usuari puga estar molt de temps sense interactuar, i quan torne a interactuar, tornar a fer-lo persistent.</li>
+</ul>
+<p>Anem a veure un exemple on es vegen els tres tipus d'estat. Tampoc cal que el
+feu vosaltres, està únicament a nivell il·lustratiu:</p>
+<pre><code>    val sessio = Configuration().configure().buildSessionFactory().openSession()
+    val t = sessio.beginTransaction()
+
+    val com = Comarca()             // A partir d'ací l'objecte és transitori
+    com.nomC = "Columbretes"
+    com.provincia = "Castelló"
+    sessio.save(com)                // A partir d'ací és persistent
+
+    t.commit()
+    sessio.close()                  // A partir d'ací és separat, igual es pot utilitzar,
+                                    // però no estarà sincronitzat
+
+    println(com.nomC + " (" + com.provincia + ")")
+</code></pre>
+<h2 id="83-carrega-dobjectes-metodes-load-i-get">8.3 - Càrrega d'objectes: mètodes load() i get()</h2>
+<p>La càrrega d'objectes s'aconsegueix amb els mètodes <strong>load()</strong> i <strong>get()</strong>.
+Són similars excepte en una qüestió: el primer dóna un error si no es troba la
+fila, mentre que el segon contindrà null. A més a partir d'Hibernate 6.0
+<strong>load</strong> està <strong>deprecated</strong> , així que millor uilitzar <strong>get</strong> .<strong><br />
+</strong></p>
+<p>Tant si utilitzem un com l'altre, haurem d'especificar 2 paràmetres: la
+<strong>classe</strong> que volem buscar, i el <strong>valor</strong> de la clau principal de qui volem
+trobar. <strong>Aquest valor s'ha de passar amb el mateix tipus que la propietat
+corresponent a la clau principal</strong> , i en moltes ocasions haurem de canviar de
+tipus (<strong>cast</strong>). En el següent exemple, molt paregut al ja utilitzat
+anteriorment en <strong>SegonAcces</strong> , trobem la comarca <strong>Alt Maestrat</strong> (valor de
+<strong>nom_c</strong> , que correspon a la clau principal). En aquesta ocasió no cal
+canviar de tipus, ja que és string:</p>
+<pre><code>1   val sessio = Configuration().configure().buildSessionFactory().openSession()
+2   
+3   val com = sessio.get("classes.Comarca","Alt Maestrat") as Comarca   // càrrega amb  mètode load()
+4   
+5   println("Comarca " + com.nomC + ": " + com.provincia)
+6   sessio.close()
+</code></pre>
+<p>Com comentàvem, si no existira la comarca Alt Maestrat, donaria un error. Ací
+tenim el mateix exemple, però utilitzant el mètode <strong>get()</strong> i comprovant
+després si <strong>com</strong> és null, i així esquivem l'error:</p>
+<pre><code>1   val sessio = Configuration().configure().buildSessionFactory().openSession()
+2   
+3   val com = sessio.get("classes.Comarca","Al Maestrat") as Comarca?   // càrrega amb mètode get()
+4   
+5    if (com==null)
+6           println("No existeix la comarca");
+7        else {
+8            println("Comarca " + com.nomC + ": " + com.provincia)
+9    }
+10  sessio.close()
+</code></pre>
+<p>Només hem tingut la dificultat d'haver de posar <strong>Comarca?</strong> per si és null el
+resultat de la consulta (justament el que volem comprovar)</p>
+<p>Anem a mirar la potencialitat que ens proporciona la manera que té Hibernate
+de construir les classes, amb el conjunt (o col·lecció) de poblacions que té
+un objecte de la classe Comarca.</p>
+<p>Els <strong>Set</strong> es poden recórrer de més d'una manera. Una molt estesa és
+utilitzar un <strong>iterator</strong> , utilitzant els mètodes <strong>hasNext()</strong> que ens diu
+si hi ha més elements en la col·lecció, i <strong>next()</strong> que torna el següent
+element de la col·lecció. En el següent programa anem a visualitzar informació
+de la comarca de l'<strong>Alcalatén</strong> , i també els seus pobles. Estan marcades les
+línies de la utilització del <strong>Iterator</strong>. Copieu-lo en un fitxer Kotlin
+anomenat <strong>Exemple_03_TercerAcces.kt</strong>:</p>
+<pre><code>package exemples
+
+import classes.Comarca
+import org.hibernate.cfg.Configuration
+import java.util.logging.Level
+import java.util.logging.LogManager
+
+fun main(args: Array&lt;String&gt;) {
+    LogManager.getLogManager().getLogger("").setLevel(Level.SEVERE)
+    val sessio = Configuration().configure().buildSessionFactory().openSession()
+    val com = sessio.get("classes.Comarca", "Alcalatén") as Comarca
+    print("La comarca " + com.nomC)
+    print(" (província de " + com.provincia + ") ")
+    println("té " + com.poblacions.size + " pobles")
+    println()
+    println("Llista de pobles")
+    println("-----------------")
+
+    val it = com.poblacions.iterator()!!
+
+    while (it.hasNext()) {
+        val p = it.next()
+        System.out.println(p.nom + " (" + p.poblacio + " habitants)")
+    }
+
+    sessio.close()
+}
+</code></pre>
+<p>Però més senzilla encara és la utilització del bucle <strong>foreach</strong> , que fa el
+recorregut ell sol, tenint disponible cada element. La sintaxi en Kotlin pot
+ser de dues maneres. Posem com queda l'exemple anterior de cadascuna de les
+dues maneres</p>
+<ul>
+<li>
+<p><strong>for (</strong><strong>e in</strong> <em><strong>conjunt</strong></em><strong>)</strong> i <strong>e</strong> anirà agafant tots els valors de la col·lecció.</p>
+<p>for (p in com.poblacions!!) {
+        println(p.nom + " (" + p.poblacio + " habitants)")
+}</p>
+</li>
+<li>
+<p><strong><em>conjunt.</em> forEach()</strong> i dins dels parèntesis utilitzem cada element com <strong>it</strong></p>
+<pre><code>com.poblacions!!.forEach { 
+    println(it.nom + " (" + it.poblacio + " habitants)")
+}
+</code></pre>
+</li>
+</ul>
+<p>Utilitzarem la primera forma, que és la més còmoda, i quedarà de la següent
+manera. Guardeu el següent programa en fitxer Kotlin anomenat
+<strong>Exemple_04_QuartAcces.kt</strong>:</p>
+<pre><code>package exemples
+
+import classes.Comarca
+import org.hibernate.cfg.Configuration
+import java.util.logging.Level
+import java.util.logging.LogManager
+
+fun main(args: Array&lt;String&gt;) {
+    LogManager.getLogManager().getLogger("").setLevel(Level.SEVERE)
+    val sessio = Configuration().configure().buildSessionFactory().openSession()
+    val com = sessio.get("classes.Comarca", "Alcalatén") as Comarca
+    print("La comarca " + com.nomC)
+    print(" (província de " + com.provincia + ") ")
+    println("té " + com.poblacions.size + " pobles")
+    println()
+    println("Llista de pobles")
+    println("-----------------")
+
+    for (p in com.poblacions) {
+        println(p.nom + " (" + p.poblacio + " habitants)")
+    }
+
+    sessio.close()
+}
+</code></pre>
+<p>En ambdós, tant en <strong>TercerAcces</strong> com en <strong>QuartAcces</strong> casos el resultat
+haurà estat:</p>
+<pre><code>La comarca Alcalatén (província de Castelló) té 9 pobles
+
+Llista de pobles  
+-----------------  
+Llucena (1417 habitants)  
+Useres, les (992 habitants)  
+Figueroles (549 habitants)  
+Costur (562 habitants)  
+Xodos (126 habitants)  
+Alcora, l' (10672 habitants)  
+Atzeneta del Maestrat (1321 habitants)  
+Vistabella del Maestrat (384 habitants)  
+Benafigos (156 habitants)
+</code></pre>
+<p>Com veieu apareixen tots els pobles de la comarca que hem llegit, però com és
+un conjunt (Set) no podem assegurar l'ordre. De fet, podria ser que a cadascú
+de nosaltres li apareguen els pobles en ordre distint.</p>
+<p>Estaria bé que aparegueren ordenats. Sempre ho podríem fer per mig d'una
+consulta i ordenar pel nom de la població com veurem més avant. Però si ens
+interessa que els pobles apareguen sempre ordenats, podem fer una altra cosa:
+modificant el fitxer de mapatge, li podem dir que ens apareguen sempre
+ordenats per un camp. Ho havíem comentat en la pregunta 7, i ara anem a
+aplicar-lo.</p>
+<p>Per mig d'una senzilla indicació en el fitxer de mapatge <strong>Comarca.hbm.xml</strong> ,
+podem fer que les dades ens vinguen ordenades, és a dir, que les poblacions
+d'una comarca ens vinguen per ordre alfabètic. Senzillament serà posar
+<strong>order-by="nom"</strong> en la definició del <strong>set</strong><strong>poblacions</strong>.</p>
+<p>És a dir hauríem de substituir la línia</p>
+<pre><code>&lt;set name=&quot;poblacions&quot; inverse=&quot;true&quot;&gt;
+</code></pre>
+<p>per</p>
+<pre><code>&lt;set name=&quot;poblacions&quot; inverse=&quot;true&quot; order-by=&quot;nom&quot;&gt;
+</code></pre>
+<p>I així li estem dient que les poblacions vinguen ordenades per nom, que és el
+camp de la taula <strong>POBLACIO</strong> pel qual ens interessa ordenar.</p>
+<p>Només fent aquesta modificació, el resultat tant del programa <strong>TercerAcces</strong>
+com el de <strong>QuartAccess</strong> serà:</p>
+<pre><code>La comarca Alcalatén (província de Castelló) té 9 pobles  
+
+Llista de pobles  
+-----------------  
+Alcora, l' (10672 habitants)  
+Atzeneta del Maestrat (1321 habitants)  
+Benafigos (156 habitants)  
+Costur (562 habitants)  
+Figueroles (549 habitants)  
+Llucena (1417 habitants)  
+Useres, les (992 habitants)  
+Vistabella del Maestrat (384 habitants)  
+Xodos (126 habitants)
+</code></pre>
+<h2 id="84-insercio-modificacio-i-esborrat-dobjectes">8.4 - Inserció, modificació i esborrat d'objectes</h2>
+<p>En totes aquestes operacions d'actualització, recordem que farà falta posar-
+les en una <strong>transacció</strong> per a que tinguen efecte.</p>
+<p><strong><u>Inserció</u></strong></p>
+<div style="background-color: #d6eaf8; color: black; padding: 5px;">
+<b>Nota</b><br>
+ A partir de la versió 6.0 d'Hibernate, <b>save()</b> està deprecated, en favor de
+<b>persist()</b>
+</div>
+<p><br></p>
+<p>Es fa amb els mètodes <strong>save()</strong> o <strong>persist()</strong> de la sessió, passant-li
+l'objecte que volem guardar. Posem el mateix exemple de l'apartat 8.1, el
+d'inserir una comarca. Copieu l'exemple en un fitxer anomenat
+<strong>Exemple_11_Insercio.kt</strong> :</p>
+<pre><code>package exemples
+
+import classes.Comarca
+import org.hibernate.cfg.Configuration
+import java.util.logging.Level
+import java.util.logging.LogManager
+
+fun main(args: Array&lt;String&gt;) {
+    LogManager.getLogManager().getLogger("").setLevel(Level.SEVERE)
+    val sessio = Configuration().configure().buildSessionFactory().openSession()
+    val t = sessio.beginTransaction ()
+    val com = Comarca()
+
+    com.nomC = "Columbretes"
+    com.provincia = "Castelló"
+
+    sessio.persist(com)
+
+    t.commit()
+    sessio.close()
+}
+</code></pre>
+<p>Podem comprovar en la taula com apareix la comarca que acabem d'introduir:</p>
+<p><img alt="" src="../T5_8_4_1.png" /></p>
+<p>I evidentment ho podríem comprovar des de <strong>DBeaver</strong></p>
+<p><strong><u>Esborrat</u></strong></p>
+<div style="background-color: #d6eaf8; color: black; padding: 5px;">
+<b>Nota</b><br>
+A partir de la versió 6.0 d'Hibernate, <b>delete()</b> està deprecated, en favor
+de <b>remove()</b>
+</div>
+<p></p>
+
+<p>Amb els mètodes <strong>delete</strong> o <strong>remove</strong> , passant-li com a paràmetre
+l'objecte. Prèviament s'ha d'haver carregar l'objecte amb els mètodes
+<strong>load()</strong> o <strong>get()</strong>. Copieu el següent exemple en el fitxer
+<strong>Exemple_12_Esborrat.kt</strong> :</p>
+<pre><code>package exemples
+
+import org.hibernate.cfg.Configuration
+import java.util.logging.Level
+import java.util.logging.LogManager
+
+fun main(args: Array&lt;String&gt;) {
+    LogManager.getLogManager().getLogger("").setLevel(Level.SEVERE)
+    val sessio = Configuration().configure().buildSessionFactory().openSession()
+    val t = sessio.beginTransaction()
+    val com = sessio.get("classes.Comarca", "Columbretes")
+
+    sessio.remove(com)
+
+    t.commit()
+    sessio.close()
+}
+</code></pre>
+<p><strong><u>Modificació</u></strong></p>
+<div style="background-color: #d6eaf8; color: black; padding: 5px;">
+<b>Nota</b><br>
+A partir de la versió 6.0 d'Hibernate, <b>update</b> està deprecated, en favor
+de <b>merge()</b>
+</div>
+<p></p>
+
+<p>Amb el mètode <strong>update()</strong> o <strong>merge()</strong> , passant-li com a paràmetre
+l'objecte. Prèviament haurà d'haver estat carregat amb els mètodes <strong>load()</strong>
+o <strong>get()</strong> , igual que en el cas d'esborrar.</p>
+<p>En el següent exemple estem canviant la província del Camp de Morvedre. Per a
+que no tinga efecte aquest canvi, i no modificar les dades que està utilitzant
+la resta de companys, observeu com al final estem fent un <strong>rollback</strong>. Copieu
+el següent en el fitxer <strong>Exemple_13_M</strong><strong>odificacio.kt</strong> :</p>
+<pre><code>package exemples
+
+import classes.Comarca
+import org.hibernate.cfg.Configuration
+import java.util.logging.Level
+import java.util.logging.LogManager
+
+fun main(args: Array&lt;String&gt;) {
+    LogManager.getLogManager().getLogger("").setLevel(Level.SEVERE)
+    val sessio = Configuration().configure().buildSessionFactory().openSession()
+    val t = sessio.beginTransaction()
+    val com = sessio.get("classes.Comarca", "Camp de Morvedre") as Comarca
+    com.provincia = "Castelló"
+
+    sessio.merge(com)
+
+    t.rollback()
+
+    sessio.close()
+}
+</code></pre>
+<p>En realitat tant el mètode <strong>persist()</strong> com el mètode <strong>merge()</strong> serveixen
+tant per a actualitzar un objecte ja existent (que ja era persistent) com per
+a crear-ne un nou si no existia.</p>
+<p>Llicenciat sota la  <a href="http://creativecommons.org/licenses/by-nc-sa/2.5/">Llicència Creative Commons Reconeixement NoComercial
+CompartirIgual 2.5</a></p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../7__estructura_dels_fitxers_de_mapatge/" class="btn btn-neutral float-left" title="7 - Estructura dels fitxers de mapatge"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../9__consultes/" class="btn btn-neutral float-right" title="9 - Consultes">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../7__estructura_dels_fitxers_de_mapatge/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../9__consultes/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

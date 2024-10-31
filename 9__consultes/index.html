@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://asalvadorc.github.io/AD_ORM/9__consultes/" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>9 - Consultes - AD - Accés a Dades</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../css/extra.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "9 - Consultes";
+        var mkdocs_page_input_path = "9__consultes.md";
+        var mkdocs_page_url = "/AD_ORM/9__consultes/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="..">
+          <img src="../assets/logocaminas.png" class="logo" alt="Logo"/>
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">UD 3. Mapatge Objecte-Relacional</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../1__introducci/">1 - Introducció</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../2__concepte_de_mapatge_objecterelacional/">2 - Concepte de mapatge objecte-relacional</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../3__eines_de_mapatge/">3 - Eines de mapatge</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../4__arquitectura_hibernate/">4 - Arquitectura Hibernate</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../5__connexi_a_hibernate/">5 - Connexió a Hibernate</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../6__classes_generades/">6 - Classes generades</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../7__estructura_dels_fitxers_de_mapatge/">7 - Estructura dels fitxers de mapatge</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../8__sessions_i_objectes_hibernate/">8 - Sessions i objectes hibernate</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">9 - Consultes</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#91-parametres-en-les-consultes">9.1 - Paràmetres en les consultes</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#92-consultes-diferents-a-una-classe-ja-definida">9.2 - Consultes diferents a una classe ja definida</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../10__consultes_dactualitzaci/">10 - Consultes d'actualització</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../11__resum_del_llenguatge_hql/">11 - Resum del llenguatge HQL</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../exercicis/">Exercicis</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">AD - Accés a Dades</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">UD 3. Mapatge Objecte-Relacional</li>
+      <li class="breadcrumb-item active">9 - Consultes</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="9-consultes">9 - Consultes</h1>
+<p>Hem vist com podem accedir molt còmodament a les classes que equivalen a una
+taula. Però en moltes ocasions ens farà falta accedir no exactament a una
+taula sinó a una combinació de taules, o en definitiva voldrem informació més
+elaborada. Per a poder "interrogar" a la Base de Dades amb consultes més
+complexes, Hibernate suporta un llenguatge de consulta Orientat a Objectes
+anomenat <strong>HQL</strong> (<em><strong>Hibernate Query Language</strong></em>), molt paregut a SQL ja que
+és una extensió Orientada a Objectes d'aquest.</p>
+<p>En aquest sentit s'ha intentat fer un estàndar de llenguatge de consulta
+anomenat <strong>OQL</strong> (<em><strong>Object Query Language</strong></em>), desenvolupat per un grup amb
+ànim de crear un estàndar <strong>ODMG</strong> (Object Data Management Group). Aquest
+estàndar no l'ha implementat al 100% cap producte comercial, i en realitat
+tenim subconjunts d'aquest estàndar.</p>
+<p>Utilitzarem la classe <strong>Query</strong> , i invocarem al mètode <strong>createQuery()</strong> de
+<strong>Session</strong> , que justament torna una Query. Aquest seria un exemple. Observeu
+que com a primer paràmetre se li passa la sentència, i com a segon paràmetre
+el tipus que torna; com que les classes no les hem traduïdes a Kotlin, hem
+d'especificar que són de Java:</p>
+<pre><code>val q = sessio.createQuery(&quot;from Comarca&quot;, Comarca::class.java)
+</code></pre>
+<div style="background-color: #d6eaf8; color: black; padding: 5px;">
+<b>Nota</b><br>
+Abans no calia el segon paràmetre, però des de la versió d'<b>Hibernate 6</b> ,
+marca com a <b>deprecated</b> el <b>createQuery</b> si no es posa aquest segon
+paràmetre
+</div>
+<p></p>
+<p>Per a recuperar les dades tenim dues possibilitats, utilitzant dos mètodes de
+la query:</p>
+<ul>
+<li>Mètode <strong>list()</strong> : torna tots els resultats de la consulta en una col·lecció (<strong>List)</strong>. Aquest mètode fa una crida única al SGBD i es duran totes les dades. Haurà d'haver, per tant, memòria suficient per a que càpiguen tots els resultats. Si és una quantitat gran de resultats, tardarà molt en executar-se.</li>
+<li>Mètode <strong>iterate()</strong> : torna un iterador per a poder recórrer els resultats de la consulta. Hibernate executa la sentència, però només torna els identificadors de les files del resultat, i cada vegada que fem <strong>next()</strong> del iterador, s'executa realment la consulta tornant la següent fila. Per tant fa falta molta menys memòria. Per contra es fan mots més accessos a la Base de Dades, encara que cadascun tardarà molt poc, però en total tardarà més. Es pot fins i tot fixar la quantitat de files a tornar amb el mètode <strong>setFetchSize()</strong>.</li>
+</ul>
+<p>En el següents dos exemples, que són equivalents, es trau una llista de totes
+les comarques. El primer utilitza el mètode <strong>list()</strong> i el segon el mètode
+<strong>iterate()</strong>. I en aquesta ocasió utilitzem un iterador per a recórrer la
+llista (List) en compte de <strong>foreach</strong> , per veure més d'una manera, i per
+similitud amb el segon exemple. Poseu a aquest primer exemple el nom de
+<strong>Exemple_21_AccesAmbList.kt</strong> :</p>
+<pre><code>package exemples
+
+import classes.Comarca
+import org.hibernate.cfg.Configuration
+import java.util.logging.Level
+import java.util.logging.LogManager
+
+fun main(args: Array&lt;String&gt;) {
+    LogManager.getLogManager().getLogger("").setLevel(Level.SEVERE)
+    val sessio = Configuration().configure().buildSessionFactory().openSession()
+    val q = sessio.createQuery ("from Comarca", Comarca::class.java)
+
+    val llista = q.list ()
+
+    val it = llista.iterator ()
+    while (it.hasNext()) {
+        val com = it.next() // no fa falta fer un casting perquè ja sap que és Comarca
+        println(com.nomC + " - " + com.provincia)
+    }
+    sessio.close()
+}
+</code></pre>
+<p>Aquest serà el resultat:</p>
+<pre><code>    Safor - València  
+    Horta Sud - València  
+    Foia de Bunyol - València  
+    Plana Baixa - Castelló  
+    Horta Nord - València  
+    Racó - València  
+    Plana d'Utiel - València  
+    Vall de Cofrents - València  
+    Ribera Baixa - València  
+    Ribera Alta - València  
+    Marina Alta - Alacant  
+    Serrans - València  
+    València - València  
+    Baix Maestrat - Castelló  
+    Marina Baixa - Alacant  
+    Vall d'Albaida - València  
+    Canal de Navarrés - València  
+    Horta Oest - València  
+    Camp de Túria - València  
+    Alt Millars - Castelló  
+    Baix Vinalopó - Alacant  
+    Comtat - Alacant  
+    Alt Palància - Castelló  
+    Plana Alta - Castelló  
+    Alacantí - Alacant  
+    Camp de Morvedre - València  
+    Alt Vinalopó - Alacant  
+    Costera - València  
+    Alcalatén - Castelló  
+    Alcoià - Alacant  
+    Vinalopó Mitjà - Alacant  
+    Alt Maestrat - Castelló  
+    Baix Segura - Alacant  
+    Ports - Castelló
+</code></pre>
+<p>Encara que la manera més curta i potser més clara és utilitzant un bucle
+<strong>foreach</strong> amb el mètode <strong>list()</strong>. Només haurem d'anar amb compte de fer un
+<em><strong>cast</strong></em> per a que sàpiga quin tipus d'element és. Copieu aquest tercer
+exemple al fitxer <strong>Exemple_22_AccesAmbListForEach.kt</strong> :</p>
+<pre><code>package exemples
+
+import classes.Comarca
+import org.hibernate.cfg.Configuration
+import java.util.logging.Level
+import java.util.logging.LogManager
+
+fun main(args: Array&lt;String&gt;) {
+    LogManager.getLogManager().getLogger("").setLevel(Level.SEVERE)
+    val sessio = Configuration().configure().buildSessionFactory().openSession()
+    val q = sessio.createQuery ("from Comarca", Comarca::class.java)
+
+    for (c in q.list()) {
+        println(c.nomC + " --- " + c.provincia)
+    }
+
+    sessio.close()
+}
+</code></pre>
+<p>Si sabem que la consulta tornarà únicament una fila, podem assignar aquesta
+fila a un objecte de la classe de la taula afectada, posant el mètode
+<strong>uniqueResult()</strong> en la creació de la query, així ens estalviem passos.
+Copieu el següent programa al fitxer kotlin
+<strong>Exemple_23_AccesAmbUniqueResult.kt</strong> :</p>
+<pre><code>package exemples
+
+import classes.Comarca
+import org.hibernate.cfg.Configuration
+import java.util.logging.Level
+import java.util.logging.LogManager
+
+fun main(args: Array&lt;String&gt;) {
+    LogManager.getLogManager().getLogger("").setLevel(Level.SEVERE)
+    val sessio = Configuration().configure().buildSessionFactory().openSession()
+
+    val d = sessio.createQuery ("from Comarca where nomC='Alcalatén'",Comarca::class.java).uniqueResult()
+
+    println(d.nomC + " - " + d.provincia)
+
+    sessio.close()
+}
+</code></pre>
+<p>Però en realitat en aquest exemple poca cosa hem guanyat, perquè per a agafar
+l'objecte corresponent a una única fila d'una taula, ja ho féiem amb
+<strong>session.get()</strong>. Més endavant veurem consultes més complicades on trobarem
+la utilitat.</p>
+<h2 id="91-parametres-en-les-consultes">9.1 - Paràmetres en les consultes</h2>
+<p><strong>createQuery()</strong> admet també la utilització de paràmetres, igual que feia les
+sentències <strong>PreparedStatement</strong> del tema anterior. La manera de posar-les és
+prou similar al vist en aquella ocasió. Ara, però, ho ampliarem un poc.</p>
+<p>La manera de posar valor als paràmetres serà utilitzant el mètodes
+<strong>setParameter()</strong> que tindrà 2 paràmetres, el primer per a assenyalar el
+paràmetre, i el segon per a indicar el valor. De moment tot igual que en el
+<strong>PreparedStatement</strong>.</p>
+<p>Però ara veurem 2 maneres de posar paràmetres en la consulta:</p>
+<ul>
+<li>Amb <strong>?i</strong> , utilitzant el mètode <strong>setParameter(int,<em>valor</em>)</strong> i indicant el número <strong>el mateix que després de la interrogant (la i)</strong>.</li>
+<li>Amb <strong>:<em>nom</em> </strong>, utilitzant el mètode <strong>setParameter(string,<em>valor</em>)</strong> i indicant el nom del paràmetre</li>
+</ul>
+<p>Ho veurem molt més clar en un exemple, millor dit, en dues versions del mateix
+exemple. Intentarem traure les poblacions d'una determinada comarca, que tenen
+una altura determinada o major. I aquestos dos valors els posarem com a
+paràmetres, i així podrem practicar les dues formes. Els valors que posarem
+per a la comarca serà <strong>Alcalatén</strong> , i l'altura <strong>500</strong></p>
+<p>En aquesta primera versió assenyalem els paràmetres amb <strong>?i</strong> a l'estil de
+<strong>JDBC</strong>. Copieu el següent codi al fitxer
+<strong>Exemple_31_ConsultesAmbParametres1.kt</strong></p>
+<pre><code>package exemples
+
+import classes.Poblacio
+import org.hibernate.cfg.Configuration
+import java.util.logging.Level
+import java.util.logging.LogManager
+
+fun main(args: Array&lt;String&gt;) {
+    LogManager.getLogManager().getLogger("").setLevel(Level.SEVERE)
+    val sessio = Configuration().configure().buildSessionFactory().openSession()
+
+    val q = sessio.createQuery("from Poblacio where altura&gt;=?1 and comarca.nomC=?2", Poblacio::class.java)
+    q.setParameter(1, 500)
+    q.setParameter(2, "Alcalatén")
+
+    for (p in q.list()) {
+        p as Poblacio
+        println(p.nom + " - " + p.altura)
+    }
+
+    sessio.close()
+}
+</code></pre>
+<div style="background-color: #d6eaf8; color: black; padding: 5px;">
+<b>Nota</b></br>
+En versions anteriors a banda de <b>setParameter()</b> s'utilitzaven els mètodes
+<b>setInteger()</b> , <b>setString()</b>... però des de la versió 6 d'Hibernate ja
+no existeixen
+</div>
+<p></p>
+
+<p>En la segona posem els paràmetres de l'altra manera. Copieu el següent codi al
+fitxer <strong>Exemple_32_ConsultesAmbParametres2.kt</strong></p>
+<pre><code>package exemples
+
+import classes.Poblacio
+import org.hibernate.cfg.Configuration
+import java.util.logging.Level
+import java.util.logging.LogManager
+
+fun main(args: Array&lt;String&gt;) {
+    LogManager.getLogManager().getLogger("").setLevel(Level.SEVERE)
+    val sessio = Configuration().configure().buildSessionFactory().openSession()
+
+    val q = sessio.createQuery("from Poblacio where altura&gt;=:alt and comarca.nomC=:com", Poblacio::class.java)
+    q.setParameter("alt",500)
+    q.setParameter("com","Alcalatén")
+    for (p in q.list()) {
+        p as Poblacio
+        println(p.nom + " - " + p.altura)
+    }
+
+    sessio.close()
+}
+</code></pre>
+<h2 id="92-consultes-diferents-a-una-classe-ja-definida">9.2 - Consultes diferents a una classe ja definida</h2>
+<p>De moment en les consultes sempre hem tornat una fila o més però sempre<strong>d'una
+única taula</strong> , o millor dit, <strong>una classe</strong> equivalent a una taula.</p>
+<p>Però hi haurà moltes ocasions en què voldrem fer una consulta diferent, on
+intervinga més d'una taula (o classe), que torne funcions de grup (SUM, AVG,
+...), en definitiva que no siga una sentència equivalent a <strong>SELECT * FROM
+...</strong></p>
+<p>Per tant ara no tornarà un objecte o una col·lecció d'objectes dels que ja
+tenim definits. Podem tenir més d'un cas, i a continuació els intentarem
+tractar:</p>
+<p>Consultes que tornen més d'un objecte dels definits</p>
+<p>Són consultes en les quals hi haurà una reunió de taules (millor dit, de les
+classes equivalents), i es tornen tots els camps (totes les propietats).</p>
+<p>Podríem definir-nos una classe que englobara totes les propietats de tots els
+objectes, però hi ha una solució més ràpida. Els resultats s'obtenen en un
+<strong>array d'objectes</strong> , on el primer objecte serà l'equivalent de la primera
+taula, el segon l'equivalent de la segona, etc.</p>
+<p>Per tant, la classe que posem com a segon paràmetre del <strong>createQuery</strong> sera
+<strong>Array::class.java</strong>.</p>
+<p>Aquest exemple, on traurem el nom de la comarca i la província, és només
+il·lustratiu. Està clar que es pot fer molt més curt i senzill agafant
+únicament les Poblacions i a partir d'elles traure la comarca. Copieu el
+següent codi al fitxer <strong>Exemple_41_ConsultaComplexa1.kt</strong> :</p>
+<pre><code>package exemples
+
+import classes.Poblacio
+import classes.Comarca
+import org.hibernate.cfg.Configuration
+import java.util.logging.Level
+import java.util.logging.LogManager
+
+fun main(args: Array&lt;String&gt;) {
+    LogManager.getLogManager().getLogger("").setLevel(Level.SEVERE)
+    val sessio = Configuration().configure().buildSessionFactory().openSession()
+
+    val q = sessio.createQuery("from Poblacio p, Comarca c where p.comarca.nomC=c.nomC order by p.nom", Array::class.java)
+
+    for(tot in q.list()) {
+        val p = tot[0] as Poblacio
+        val c = tot[1] as Comarca
+        println(p.nom + " (" + c.nomC + ". " + c.provincia + ")")
+    }
+
+    sessio.close()
+}
+</code></pre>
+<p>Com veiem, un poc "rotllo"...</p>
+<p><strong><u>Consultes que tornen un únic valor</u></strong></p>
+<p>Aquest és el cas més senzill, ja que el valor tornat el podem agafar del tipus
+bàsic del valor tornat. Normalment és després d'utilitzar una funció de grup.
+Recordem que ha de tornar un únic valor (una única fila i una única columna,
+per dir-lo així).</p>
+<p>La classe que posem com a segon paràmetre del <strong>createQuery</strong> harà de ser la
+del valor tornat. En aquest cas que calculem la mitjana, a classe oportuna
+serà <strong>Double</strong>. Si comptàrem, per exemple, seria <strong>Long</strong>.</p>
+<p>Haurem d'utilitzar el mètode <strong>uniqueResult()</strong> ja comentat amb anterioritat.
+L'exemple serà per a calcular l'altura mitjana de totes les poblacions. Copieu
+el següent codi al fitxer Kotlin <strong>Exemple_42_ConsultaComplexa2.kt</strong> :</p>
+<pre><code>package exemples
+
+import org.hibernate.cfg.Configuration
+import java.util.logging.Level
+import java.util.logging.LogManager
+
+fun main(args: Array&lt;String&gt;) {
+    LogManager.getLogManager().getLogger("").setLevel(Level.SEVERE)
+    val sessio = Configuration().configure().buildSessionFactory().openSession()
+
+    val q = sessio.createQuery("select avg(altura) from Poblacio",Double::class.java)
+
+    val mitjana = q.uniqueResult ()
+
+    println("Altura mitjana: " + mitjana)
+
+    sessio.close()
+}
+</code></pre>
+<p><strong><u>Consultes amb qualsevol resultat</u></strong></p>
+<p>Una de les solucions seria crear una classe amb totes les propietats que torna
+la consulta. No veurem aquesta solució per tediosa.</p>
+<p>Farem com en el primer apartat d'aquesta pregunta, gestionant l'<strong>array
+d'objectes</strong> que s'obtenen, però en aquesta ocasió cada objecte de l'array
+serà un tipus simple. Copieu el següent codi al fitxer
+<strong>Exemple_43_ConsultaComplexa3.kt</strong> :</p>
+<pre><code>package exemples
+
+import org.hibernate.cfg.Configuration
+import java.util.logging.Level
+import java.util.logging.LogManager
+
+fun main(args: Array&lt;String&gt;) {
+    LogManager.getLogManager().getLogger("").setLevel(Level.SEVERE)
+    val sessio = Configuration().configure().buildSessionFactory().openSession()
+
+    val q = sessio.createQuery("select c.nomC,count(p.codM),avg(p.altura) "
+            + "from Comarca c , Poblacio p "
+            + "where c.nomC=p.comarca.nomC "
+            + "group by c.nomC "
+            + "order by c.nomC", Array::class.java);
+    for (tot in q.list()){
+        println("Comarca: " + tot[0] + ". Núm. pobles: " + tot[1] + ". Altura mitjana: " + tot[2]);
+    }
+    sessio.close()
+}
+</code></pre>
+<p>Només hem d'anar amb compte amb posar com a segon paràmetre de <strong>createQuery</strong>
+el tipus <strong>Array::class.java</strong>.    </p>
+<p>Llicenciat sota la  <a href="http://creativecommons.org/licenses/by-nc-sa/2.5/">Llicència Creative Commons Reconeixement NoComercial
+CompartirIgual 2.5</a></p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../8__sessions_i_objectes_hibernate/" class="btn btn-neutral float-left" title="8 - Sessions i objectes hibernate"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../10__consultes_dactualitzaci/" class="btn btn-neutral float-right" title="10 - Consultes d'actualització">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../8__sessions_i_objectes_hibernate/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../10__consultes_dactualitzaci/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
